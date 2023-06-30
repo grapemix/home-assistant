@@ -1,0 +1,9 @@
+http:
+  server_host: 0.0.0.0
+  trusted_proxies:
+    - !secret network_cluster
+    - !secret ip_tailscale_jyun
+    - !secret ip_tailscale_mou
+    - !secret ip_tailscale_phoenix
+    - !secret ip_tailscale_leaf
+  use_x_forwarded_for: true

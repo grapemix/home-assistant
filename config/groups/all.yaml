@@ -1,0 +1,10 @@
+all_switches:
+  name: All Switches
+  icon: mdi:toggle-switch
+  all: yes
+
+all_lights:
+  name: All Lights
+  icon: mdi:lightbulb-group
+  all: yes
+

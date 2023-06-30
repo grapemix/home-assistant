@@ -1,0 +1,34 @@
+alias: Vacation Mode Tag
+mode: single
+trigger:
+  - platform: tag
+    tag_id: 598a8118-a5e4-4610-9078-ee90a1dda05b
+action:
+  # send notification
+
+  - service: shell_command.ntfy
+    alias: Send ntfy.sh
+    data:
+      tags: house_with_garden
+      topic: 家
+      title: Vacation Mode
+      message: >
+        :palm_tree: Vacation Mode will be {{ 'enabled in 3 minutes' if is_state('switch.vacation_mode', 'off') else 'disabled immediately' }}.
+  # wait 3 minutes if vacation mode will be turned on
+  - delay: "{{ '00:03' if is_state('switch.vacation_mode', 'off') else '00:00' }}"
+
+  # toggle vacation mode switch
+  - service: switch.toggle
+    data:
+      entity_id: switch.vacation_mode
+
+  # turn everything off
+  - alias: Vacation Mode was turned off
+    condition: state
+    entity_id: switch.vacation_mode
+    state: 'on'
+  - service: homeassistant.turn_off
+    data:
+      entity_id:
+        - group.all_switches
+        - group.all_lights

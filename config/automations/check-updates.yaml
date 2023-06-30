@@ -1,0 +1,48 @@
+alias: Check Home Assistant Version once a day
+trigger:
+  - platform: homeassistant
+    event: start
+  - platform: time
+    at: '08:00:00'
+condition:
+  condition: template
+  value_template: >
+    {{ states('sensor.latest_version') > states('sensor.current_version') }}
+action:
+  - service: shell_command.ntfy
+    alias: Send ntfy.sh
+    data_template:
+      tags: house_with_garden
+      topic: 家
+      title: Update available
+      message: Theres a new version of Home Assistant Core available!
+      data:
+        embed:
+          title: >
+            {{ states('sensor.current_version') }}
+          color: 15105570 # orange
+          url: >
+            https://www.home-assistant.io/latest-release-notes
+          fields:
+            - name: Current Version
+              value: >
+                {{ states('sensor.current_version') }}
+              inline: false
+            - name: Latest Version
+              value: >
+                {{ states('sensor.latest_version') }}
+              inline: false
+            - name: Release Notes
+              value: >
+                https://www.home-assistant.io/latest-release-notes
+              inline: false
+            - name: Source Code
+              value: >
+                https://github.com/home-assistant/core/releases/tag/{{ states('sensor.latest_version') }}
+              inline: false
+  - service: persistent_notification.create
+    data_template:
+      title: Update available
+      notification_id: "Update available"
+      message: >
+        New version available: [{{ states('sensor.latest_version') }}](https://github.com/home-assistant/core/releases/tag/{{ states('sensor.latest_version') }}) | [Releases](https://www.home-assistant.io/blog/categories/release-notes/)
