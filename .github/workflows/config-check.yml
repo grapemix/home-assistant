@@ -1,0 +1,24 @@
+name: Config Check
+on: push
+
+jobs:
+  check:
+    name: Config Check
+    runs-on: ubuntu-latest
+    steps:
+      # checkout
+      - uses: actions/checkout@v3
+
+      # setup taskfile
+      - uses: arduino/setup-task@v1
+
+      # prepare files
+      - name: Prepare configuration files
+        run: task prepare diff
+
+      # check configuration
+      - uses: addnab/docker-run-action@v3
+        with:
+          image: homeassistant/home-assistant:stable
+          options: -v ${{ github.workspace }}/config:/config
+          run: hass --script check_config --config /config

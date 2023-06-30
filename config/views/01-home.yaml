@@ -1,0 +1,90 @@
+title: Home
+path: home
+icon: mdi:home
+theme: Google - Dark
+panel: true
+badges: []
+cards:
+  - type: custom:mod-card
+    card:
+      type: custom:layout-card
+      layout_type: custom:horizontal-layout
+      layout:
+        max_width: 1000
+      cards:
+        # left column
+        - type: vertical-stack
+          cards:
+            - type: weather-forecast
+              entity: weather.home
+            - type: custom:sun-card
+              darkMode: true
+              card_mod:
+                style: |
+                  .sun-card-header .sun-card-text-container:first-child {
+                    align-items: flex-start;
+                  }
+                  .sun-card-header .sun-card-text-container:last-child {
+                    align-items: flex-end;
+                  }
+                  .sun-card-header .sun-card-text-container:last-child .sun-card-text-time {
+                    display: flex;
+                    flex-direction: row-reverse;
+                    align-items: baseline;
+                  }
+                  .sun-card-header .sun-card-text-container:last-child .sun-card-text-time-period {
+                    margin-right: 8px;
+                  }
+        # middle column
+        - type: vertical-stack
+          cards:
+            # hallway
+            - type: entity-filter
+              show_empty: false
+              state_filter:
+                - operator: '!='
+                  value: 'unavailable'
+              card:
+                title: Hallway
+                icon: mdi:door
+                state_color: false
+                show_header_toggle: false
+              entities:
+                - type: custom:multiple-entity-row
+                  entity: binary_sensor.entrance_door_lumi_contact
+                  name: Door
+                  icon: mdi:door
+                  secondary_info: last-changed
+                  show_state: false
+                  entities:
+                    - entity: binary_sensor.entrance_door_lumi_contact
+                      name: State
+                    - entity: sensor.entrance_door_lumi_power
+                      name: Battery
+                - type: custom:text-divider-row
+                  entity: sensor.time
+                  text: Modes
+                  card_mod:
+                    style: |
+                      h2.text-divider {
+                        margin: 0;
+                        font-weight: normal;
+                        letter-spacing: 0.5px;
+                        opacity: .5;
+                      }
+
+                      h2.text-divider span {
+                        padding: 10px 1em;
+                      }
+                - entity: switch.vacation_mode
+                  secondary_info: last-changed
+    card_mod:
+      style: |
+        ha-card {
+          max-width: calc(100% + 7px);
+          margin-top: -8px;
+          margin-right: -8px;
+          margin-left: -7px;
+          transition: none;
+          border: 0;
+        }
