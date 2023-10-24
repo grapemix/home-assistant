@@ -78,6 +78,48 @@ cards:
                       }
                 - entity: switch.vacation_mode
                   secondary_info: last-changed
+
+
+            # bedroom
+            - type: entity-filter
+              show_empty: false
+              state_filter:
+                - operator: '!='
+                  value: 'unavailable'
+              card:
+                title: Bedroom 1
+                icon: mdi:bed
+                state_color: true
+                show_header_toggle: true
+              entities:
+                - type: custom:text-divider-row
+                  entity: sensor.time
+                  text: Lights
+                  card_mod:
+                    style: |
+                      h2.text-divider {
+                        margin: 0;
+                        font-weight: normal;
+                        letter-spacing: 0.5px;
+                        opacity: .5;
+                      }
+
+                      h2.text-divider span {
+                        padding: 10px 1em;
+                      }
+                - entity: light.bedrm1_lights
+                  secondary_info: last-changed
+                - type: custom:rgb-light-card
+                  entity: light.bedrm1_lights
+                  justify: around
+                  hide_when_off: true
+                  colors:
+                    - hs_color: [45, 100]
+                    - hs_color: [165, 100]
+                    - hs_color: [90, 0]
+                    - hs_color: [280, 27]
+                    - hs_color: [301, 24]
+                    - hs_color: [15, 100]
     card_mod:
       style: |
         ha-card {
