@@ -7,4 +7,25 @@ all_lights:
   name: All Lights
   icon: mdi:lightbulb-group
   all: yes
+  entities:
+    - light.bedrm1_sengled_e21_n1ea_left_light
+    - light.bedrm1_sengled_e21_n1ea_right_light
 
+bedrm1_lights:
+  name: Bedroom 1 Lights
+  icon: mdi:lightbulb-group
+  all: yes
+  entities:
+    - light.bedrm1_sengled_e21_n1ea_left_light
+    - light.bedrm1_sengled_e21_n1ea_right_light
+
+#switch:
+#  #- platform: switch
+#  #  name: Bedroom 1 TV
+#  #  entity_id: switch.plug2
+#  - platform: group
+#    name: Bedroom 1 Lights
+#    entities:
+#      # Can be light or switch in this kind of structure
+#      - light.bedrm1_sengled_e21_n1ea_left_light
+#      - light.bedrm1_sengled_e21_n1ea_right_light

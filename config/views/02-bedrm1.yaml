@@ -1,0 +1,79 @@
+title: Bedroom 1
+path: bedrm1
+icon: mdi:bed
+theme: Google - Dark
+panel: true
+badges: []
+cards:
+  - type: custom:mod-card
+    card:
+      type: custom:layout-card
+      layout_type: custom:horizontal-layout
+      layout:
+        max_width: 1000
+      cards:
+        - type: vertical-stack
+          cards:
+            - type: entities
+              title: TV placeholder
+              state_color: false
+              show_header_toggle: false
+              entities:
+                - type: divider
+        - type: vertical-stack
+          cards:
+            - type: entities
+              title: Lights
+              state_color: true
+              show_header_toggle: true
+              entities:
+                - entity: group.bedrm1_lights
+                  secondary_info: last-changed
+                - type: custom:rgb-light-card
+                  entity: light.bedrm1_sengled_e21_n1ea_left_light
+                  justify: around
+                  colors:
+                    - color_temp_kelvin: 2000
+                      brightness: 5
+                    - color_temp_kelvin: 2000
+                      brightness: 50
+                    - color_temp_kelvin: 2000
+                      brightness: 100
+                    - color_temp_kelvin: 6493
+                      brightness: 50
+                    - color_temp_kelvin: 6493
+                      brightness: 100
+                    - hs_color: [45, 100]
+                    - hs_color: [165, 100]
+                    - hs_color: [90, 0]
+                    - hs_color: [280, 27]
+                    - hs_color: [301, 24]
+                - type: custom:rgb-light-card
+                  entity: light.bedrm1_sengled_e21_n1ea_right_light
+                  justify: around
+                  colors:
+                    - color_temp_kelvin: 2000
+                      brightness: 5
+                    - color_temp_kelvin: 2000
+                      brightness: 50
+                    - color_temp_kelvin: 2000
+                      brightness: 100
+                    - color_temp_kelvin: 6493
+                      brightness: 50
+                    - color_temp_kelvin: 6493
+                      brightness: 100
+                    - hs_color: [45, 100]
+                    - hs_color: [165, 100]
+                    - hs_color: [90, 0]
+                    - hs_color: [280, 27]
+                    - hs_color: [301, 24]
+    card_mod:
+      style: |
+        ha-card {
+          max-width: calc(100% + 7px);
+          margin-top: -8px;
+          margin-right: -8px;
+          margin-left: -7px;
+          transition: none;
+          border: 0;
+        }
