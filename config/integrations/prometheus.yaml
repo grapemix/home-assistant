@@ -1,5 +1,5 @@
 prometheus:
-  namespace: homeassistant
+  namespace: castle
   filter:
     include_entity_globs:
       - sensor.cert_*

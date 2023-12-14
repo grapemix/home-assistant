@@ -2,10 +2,18 @@ homeassistant:
   customize: !include customize.yaml
   packages: !include_dir_named integrations
   auth_providers:
-    - type: trusted_networks
-      trusted_networks:
-        - !secret ip_vpn
-      allow_bypass_login: true
+    - type: command_line
+      command: /config/bin/auth_authelia.sh
+      args:
+        - !secret auth_host
+        - !secret hass_host
+        - !secret hass_auth_grp
+      meta: true
+    #
+    #- type: trusted_networks
+    #  trusted_networks:
+    #    - !secret ip_vpn
+    #  allow_bypass_login: true
     - type: homeassistant
 lovelace:
   mode: yaml
@@ -49,16 +57,33 @@ frontend:
   extra_module_url:
     - /local/lovelace-card-mod/card-mod.js?v=3.0.12
 
+# https://docs.ntfy.sh/examples/#home-assistant
+notify:
+  - name: ntfy
+    platform: rest
+    method: POST_JSON
+    authentication: basic
+    username: ""
+    password: "!secret ntfy_access_token"
+    data:
+      topic: home
+        #priority: 4
+    #title_param_name: title
+    #message_param_name: message
+    resource: !secret ntfy_host
+
+# https://docs.ntfy.sh/publish/#access-tokens
 shell_command:
-    ntfy: >
-        curl
-        -X POST
-        --url 'https://ntfy.sh/{{ topic }}'
-        --data '{{ message }}'
-        --header 'X-Title: {{ title }}'
-        --header 'X-Tags: {{ tags }}'
-        --header 'X-Priority: {{ priority }}'
-        --header 'X-Delay: {{ delay }}'
-        --header 'X-Actions: {{ actions }}'
-        --header 'X-Click: {{ click }}'
-        --header 'X-Icon: {{ icon }}'{% endraw %}        
+  ntfy: >
+      curl
+      -X POST
+      --url '!secret ntfy_w_topic_url'
+      -u '!secret ntfy_access_token_with_empty_username'
+      --data '{{ message }}'
+      --header 'X-Title: {{ title }}'
+      --header 'X-Tags: {{ tags }}'
+      --header 'X-Priority: {{ priority }}'
+      --header 'X-Delay: {{ delay }}'
+      --header 'X-Actions: {{ actions }}'
+      --header 'X-Click: {{ click }}'
+      --header 'X-Icon: {{ icon }}'{% endraw %}

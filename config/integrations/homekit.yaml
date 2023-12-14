@@ -1,8 +1,8 @@
 homekit:
   name: Home Assistant
   # !!! Switch to tower
-  advertise_ip: !secret ip_phoenix
-  port: 31063
+  #advertise_ip: !secret ip_phoenix
+  #port: 31063
   filter:
     include_domains:
       - light

@@ -3,9 +3,9 @@ homeassistant:
   name: Eve
   country: US
   language: en
-  latitude: !secret home_latitude
-  longitude: !secret home_longitude
-  time_zone: !secret home_timezone
+  latitude: !secret latitude
+  longitude: !secret longitude
+  time_zone: !secret timezone
   unit_system: metric
   currency: USD
 
