@@ -13,7 +13,7 @@ homeassistant:
   auth_providers:
     - type: trusted_networks
       trusted_networks:
-        - !secret ip_vpn
+        - !secret bootstrap_cluster_cidr
       allow_bypass_login: true
     - type: homeassistant
 lovelace:

@@ -1,6 +1,6 @@
 # tini
-FROM --platform=${BUILDPLATFORM} alpine:3.18 as tini
-LABEL maintainer="grapemix@github"
+FROM --platform=${BUILDPLATFORM} alpine:3.20 as tini
+LABEL maintainer="kingston@fung.house"
 
 # environment
 ARG TINI_VERSION=v0.19.0
@@ -16,24 +16,24 @@ RUN case ${TARGETPLATFORM} in \
     && chmod +x /tini
 
 # final image
-FROM alpine:3.18
-LABEL maintainer="grapemix@github"
+FROM alpine:3.20
+LABEL maintainer="kingston@fung.house"
 
 # environment
 ARG SYNC_REPO
 ARG SYNC_BRANCH
-ENV GIT_SYNC_REPO=${SYNC_REPO}
-ENV GIT_SYNC_BRANCH=${SYNC_BRANCH}
-ENV GIT_SYNC_ROOT=/config-sync
-ENV GIT_SYNC_DEST=${SYNC_BRANCH}
-ENV GIT_SYNC_MAX_SYNC_FAILURES=3
+ENV GITSYNC_REPO=${SYNC_REPO}
+ENV GITSYNC_REF=${SYNC_BRANCH}
+ENV GITSYNC_ROOT=/tmp/config-sync
+ENV GITSYNC_LINK=${SYNC_BRANCH}
+ENV GITSYNC_MAX_SYNC_FAILURES=3
 
 # install git
 RUN apk add --no-cache git
 
 # inject built files
 COPY --from=tini /tini /sbin/tini
-COPY --from=registry.k8s.io/git-sync/git-sync:v3.6.8 /git-sync /sbin/git-sync
+COPY --from=registry.k8s.io/git-sync/git-sync:v4.2.4 /git-sync /sbin/git-sync
 
 # inject entrypoint
 COPY docker-entrypoint.sh /docker-entrypoint.sh
